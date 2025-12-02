@@ -1,0 +1,36 @@
+name: Dionis Pipeline
+
+on:
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Run your workflow with Snakemake
+      - name: Run pipeline with Snakemake
+        run: |
+          snakemake -j1
+
+      # Save pipeline outputs (optional, but very useful)
+      - name: Upload outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-outputs
+          path: |
+            bird_report.csv
+            bird_report_plot.png

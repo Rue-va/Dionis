@@ -1,0 +1,9 @@
+snakemake
+pandas
+fuzzywuzzy
+matplotlib
+seaborn
+pymongo
+minio
+requests
+kafka-python

@@ -1,0 +1,47 @@
+Assuming unrestricted shared filesystem usage.
+host: DESKTOP-OB4VAQ4
+Building DAG of jobs...
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job                count
+---------------  -------
+all                    1
+consume_kafka          1
+generate_report        1
+process_audio          1
+scrape_species         1
+total                  5
+
+Select jobs to execute...
+Execute 1 jobs...
+[Tue Dec  2 15:33:30 2025]
+localrule scrape_species:
+    output: species.done
+    jobid: 4
+    reason: Missing output files: species.done
+    resources: tmpdir=C:\Users\Korisnik\AppData\Local\Temp
+RuleException:
+CalledProcessError in file "C:\Users\Korisnik\OneDrive - A1 Telekom Austria AG\Desktop\dionis_pipeline\Snakefile", line 8:
+Command 'py scrape_species.py && echo done > species.done' returned non-zero exit status 2.
+[Tue Dec  2 15:33:30 2025]
+Error in rule scrape_species:
+    message: None
+    jobid: 4
+    output: species.done
+    shell:
+        py scrape_species.py && echo done > species.done
+        (command exited with non-zero exit code)
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look below for error messages
+[Tue Dec  2 15:33:30 2025]
+Error in rule scrape_species:
+    message: None
+    jobid: 4
+    output: species.done
+    shell:
+        py scrape_species.py && echo done > species.done
+        (command exited with non-zero exit code)
+Complete log(s): C:\Users\Korisnik\OneDrive - A1 Telekom Austria AG\Desktop\dionis_pipeline\.snakemake\log\2025-12-02T153329.847658.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

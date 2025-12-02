@@ -1,0 +1,62 @@
+Assuming unrestricted shared filesystem usage.
+host: DESKTOP-OB4VAQ4
+Building DAG of jobs...
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job                count
+---------------  -------
+all                    1
+consume_kafka          1
+generate_report        1
+process_audio          1
+total                  4
+
+Select jobs to execute...
+Execute 1 jobs...
+[Tue Dec  2 15:43:04 2025]
+localrule consume_kafka:
+    input: species.done
+    output: kafka.done
+    jobid: 3
+    reason: Missing output files: kafka.done
+    resources: tmpdir=C:\Users\Korisnik\AppData\Local\Temp
+[Tue Dec  2 15:43:11 2025]
+Finished jobid: 3 (Rule: consume_kafka)
+1 of 4 steps (25%) done
+Select jobs to execute...
+Execute 1 jobs...
+[Tue Dec  2 15:43:11 2025]
+localrule process_audio:
+    input: kafka.done
+    output: audio.done
+    jobid: 2
+    reason: Missing output files: audio.done; Input files updated by another job: kafka.done
+    resources: tmpdir=C:\Users\Korisnik\AppData\Local\Temp
+[Tue Dec  2 15:43:17 2025]
+Finished jobid: 2 (Rule: process_audio)
+2 of 4 steps (50%) done
+Select jobs to execute...
+Execute 1 jobs...
+[Tue Dec  2 15:43:17 2025]
+localrule generate_report:
+    input: audio.done
+    output: bird_report.csv
+    jobid: 1
+    reason: Missing output files: bird_report.csv; Input files updated by another job: audio.done
+    resources: tmpdir=C:\Users\Korisnik\AppData\Local\Temp
+[Tue Dec  2 15:43:21 2025]
+Finished jobid: 1 (Rule: generate_report)
+3 of 4 steps (75%) done
+Select jobs to execute...
+Execute 1 jobs...
+[Tue Dec  2 15:43:21 2025]
+localrule all:
+    input: bird_report.csv
+    jobid: 0
+    reason: Input files updated by another job: bird_report.csv
+    resources: tmpdir=C:\Users\Korisnik\AppData\Local\Temp
+[Tue Dec  2 15:43:21 2025]
+Finished jobid: 0 (Rule: all)
+4 of 4 steps (100%) done
+Complete log(s): C:\Users\Korisnik\OneDrive - A1 Telekom Austria AG\Desktop\dionis_pipeline\.snakemake\log\2025-12-02T154304.780891.snakemake.log
