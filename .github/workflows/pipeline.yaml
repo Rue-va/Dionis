@@ -54,6 +54,20 @@ jobs:
       - name: Run pipeline with Snakemake
         run: |
           snakemake --cores 1
+      - name: Wait for services
+        run: |
+          for i in {1..30}; do
+            # Use python to check if the port is open
+            if python3 -c "import socket; s = socket.socket(); s.connect(('localhost', 9092))" 2>/dev/null; then
+              echo "Kafka port 9092 is open. Giving it 15 more seconds to initialize..."
+              sleep 15
+              exit 0
+            fi
+            echo "Waiting for Kafka port..."
+            sleep 5
+          done
+          echo "Kafka never became available"
+          exit 1
       - name: Upload Report and Plot
         if: always()
         uses: actions/upload-artifact@v4

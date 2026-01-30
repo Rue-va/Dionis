@@ -12,6 +12,7 @@ def store_sightings():
     consumer = KafkaConsumer(
         KAFKA_TOPIC,
         bootstrap_servers=['localhost:9092'],
+        api_version=(0, 10, 1),
         auto_offset_reset='earliest',
         enable_auto_commit=True,
         value_deserializer=lambda m: json.loads(m.decode('utf-8')),
