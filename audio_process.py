@@ -2,7 +2,7 @@ from minio import Minio
 from pymongo import MongoClient
 import requests
 import os
-from datetime import datetime
+from datetime import datetime,timezone
 
 MINIO_ENDPOINT = "localhost:9000"
 MINIO_ACCESS_KEY = "minioadmin"
@@ -13,7 +13,7 @@ AUDIO_DIR = "test_audio"  # folder of test audio files
 LOCATION = {"latitude": -17.82, "longitude": 31.05}
 MONGO_URI = "mongodb://localhost:27017/"
 DB_NAME = "bird_db"
-CLASSIFIER_URL = "https://aves.regoch.net/index.html"  # <-- 
+CLASSIFIER_URL = "https://aves.regoch.net/index.html"  
 
 def ensure_bucket(minio_client, bucket):
     if not minio_client.bucket_exists(bucket):
@@ -72,11 +72,11 @@ def upload_and_classify():
             "file_name": fname,
             "location": LOCATION,
             "classification": classification,
-            "uploaded_at": datetime.utcnow()
+            "uploaded_at": datetime.now(timezone.utc)
         })
 
         # 4. Store log of request/response in MinIO
-        logdata = f"File: {fname}, Time: {datetime.utcnow()}, Response: {classification}"
+        logdata = f"File: {fname}, Time: {datetime.now(timezone.utc)}, Response: {classification}"
         logname = f"{fname}.log.txt"
         with open(logname, "w") as logf:
             logf.write(logdata)
