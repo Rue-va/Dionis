@@ -1,0 +1,36 @@
+Assuming unrestricted shared filesystem usage.
+host: DESKTOP-OB4VAQ4
+Building DAG of jobs...
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job                count
+---------------  -------
+all                    1
+generate_report        1
+total                  2
+
+Select jobs to execute...
+Execute 1 jobs...
+[Fri Jan 30 21:55:30 2026]
+localrule generate_report:
+    input: audio.done
+    output: bird_report.csv
+    jobid: 1
+    reason: Missing output files: bird_report.csv
+    resources: tmpdir=C:\Users\Korisnik\AppData\Local\Temp
+[Fri Jan 30 21:55:32 2026]
+Finished jobid: 1 (Rule: generate_report)
+1 of 2 steps (50%) done
+Select jobs to execute...
+Execute 1 jobs...
+[Fri Jan 30 21:55:32 2026]
+localrule all:
+    input: bird_report.csv
+    jobid: 0
+    reason: Input files updated by another job: bird_report.csv
+    resources: tmpdir=C:\Users\Korisnik\AppData\Local\Temp
+[Fri Jan 30 21:55:32 2026]
+Finished jobid: 0 (Rule: all)
+2 of 2 steps (100%) done
+Complete log(s): C:\Users\Korisnik\OneDrive - A1 Telekom Austria AG\Desktop\dionis_pipeline\.snakemake\log\2026-01-30T215529.927315.snakemake.log
