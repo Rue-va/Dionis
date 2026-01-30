@@ -20,11 +20,10 @@ jobs:
         env:
           MINIO_ROOT_USER: minioadmin
           MINIO_ROOT_PASSWORD: minioadmin
+        # Simplified to prevent the "Failed to initialize" error
         options: >-
-          --health-cmd "curl -f http://localhost:9000/minio/health/live || exit 1"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+          --entrypoint sh
+          -c "minio server /data"
 
     steps:
       - name: Checkout repo
@@ -40,7 +39,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # CRITICAL FIX: Give MongoDB/MinIO 20 seconds to finish starting up
+      # Wait for the containers to fully initialize
       - name: Wait for services
         run: sleep 20
 
@@ -49,9 +48,9 @@ jobs:
         run: |
           snakemake -j1
 
-      # Save the final CSV for the professor to see
+      # Save the outputs even if earlier steps fail
       - name: Upload outputs
-        if: always() # Ensures you get the artifact even if the run fails
+        if: always() 
         uses: actions/upload-artifact@v4
         with:
           name: pipeline-outputs
