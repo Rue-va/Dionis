@@ -13,7 +13,7 @@ AUDIO_DIR = "test_audio"  # folder of test audio files
 LOCATION = {"latitude": -17.82, "longitude": 31.05}
 MONGO_URI = "mongodb://localhost:27017/"
 DB_NAME = "bird_db"
-CLASSIFIER_URL = "https://example.com/classify"  # <-- Replace with the real classifier URL from your assignment
+CLASSIFIER_URL = "https://aves.regoch.net/index.html"  # <-- 
 
 def ensure_bucket(minio_client, bucket):
     if not minio_client.bucket_exists(bucket):
