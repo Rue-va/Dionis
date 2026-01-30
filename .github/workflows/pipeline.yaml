@@ -20,6 +20,21 @@ jobs:
           MINIO_ROOT_USER: minioadmin
           MINIO_ROOT_PASSWORD: minioadmin
           command: server /data
+  zookeeper:
+    image: bitnami/zookeeper:latest
+    ports:
+      - 2181:2181
+    env:
+      ALLOW_ANONYMOUS_LOGIN: "yes"
+  kafka:
+    image: bitnami/kafka:latest
+    ports:
+      - 9092:9092
+    env:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      ALLOW_PLAINTEXT_LISTENER: "yes"
 
     steps:
       - name: Checkout repo
