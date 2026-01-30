@@ -21,3 +21,4 @@ rule generate_report:
     input: "audio.done"
     output: "bird_report.csv"
     shell: "python report.py"
+    

@@ -34,3 +34,4 @@ jobs:
           path: |
             bird_report.csv
             bird_report_plot.png
+            
