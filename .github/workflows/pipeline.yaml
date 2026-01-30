@@ -10,7 +10,7 @@ jobs:
         ports:
           - 27017:27017
       zookeeper:
-        image: zookeeper:3.8.3
+        image: confluentinc/cp-zookeeper:7.5.0
         ports:
           - 2181:2181
         env:
@@ -20,7 +20,7 @@ jobs:
         ports:
           - 9092:9092
         env:
-          KAFKA_CFG_ZOOKEEPER_CONNECT: zookeeper:3.8.3
+          KAFKA_CFG_ZOOKEEPER_CONNECT: zookeeper:2181
           KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
           ALLOW_PLAINTEXT_LISTENER: "yes"
 
