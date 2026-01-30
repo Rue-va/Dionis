@@ -7,7 +7,7 @@ jobs:
   pipeline:
     runs-on: ubuntu-latest
 
-    # This section starts the databases in the GitHub Cloud runner
+    # Starts cloud versions of your local Docker containers
     services:
       mongodb:
         image: mongo:latest
@@ -40,6 +40,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      # CRITICAL FIX: Give MongoDB/MinIO 20 seconds to finish starting up
+      - name: Wait for services
+        run: sleep 20
+
       # This runs your Snakemake orchestrator
       - name: Run pipeline with Snakemake
         run: |
@@ -47,7 +51,7 @@ jobs:
 
       # Save the final CSV for the professor to see
       - name: Upload outputs
-        if: always() # Upload even if a step fails so you can see logs
+        if: always() # Ensures you get the artifact even if the run fails
         uses: actions/upload-artifact@v4
         with:
           name: pipeline-outputs
