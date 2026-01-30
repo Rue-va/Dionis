@@ -1,0 +1,4 @@
+SyntaxError in file "C:\Users\Korisnik\OneDrive - A1 Telekom Austria AG\Desktop\dionis_pipeline\Snakefile", line 27:
+invalid syntax:
+	shell ( , bench_record=bench_record, bench_iteration=bench_iteration
+

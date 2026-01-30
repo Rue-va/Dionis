@@ -1,0 +1,20 @@
+Assuming unrestricted shared filesystem usage.
+host: DESKTOP-OB4VAQ4
+Building DAG of jobs...
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job                count
+---------------  -------
+all                    1
+consume_kafka          1
+generate_report        1
+process_audio          1
+scrape_species         1
+total                  5
+
+Select jobs to execute...
+Execute 1 jobs...
+RuleException in rule scrape_species in file "C:\Users\Korisnik\OneDrive - A1 Telekom Austria AG\Desktop\dionis_pipeline\Snakefile", line 6:
+NameError: The name 'python' is unknown in this context. Please make sure that you defined that variable. Also note that braces not used for variable access have to be escaped by repeating them, i.e. {{print $1}}, when formatting the following:
+{python} species_scrappe.py && echo done > species.done
