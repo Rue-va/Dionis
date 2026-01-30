@@ -1,7 +1,7 @@
 name: Dionis Pipeline
 
 on:
-  workflow_dispatch:  # REQUIRED: This enables the manual "Run workflow" button
+  workflow_dispatch:  # REQUIRED: Enables the manual "Run workflow" button
 
 jobs:
   pipeline:
@@ -19,9 +19,6 @@ jobs:
         env:
           MINIO_ROOT_USER: minioadmin
           MINIO_ROOT_PASSWORD: minioadmin
-        # Final fix for MinIO initialization
-        options: >-
-          minio server /data --console-address :9001
 
     steps:
       - name: Checkout repo
@@ -44,7 +41,7 @@ jobs:
         run: |
           snakemake --cores 1
 
-      # BONUS: Visualization/Artifact Storage
+      # BONUS: Visualization through Artifacts
       - name: Upload Report and Plot
         if: always() 
         uses: actions/upload-artifact@v4
