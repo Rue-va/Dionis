@@ -1,18 +1,8 @@
 name: Dionis Pipeline
 
 on:
-  workflow_dispatch:  # Allows manual trigger
+  workflow_dispatch:  # REQUIRED: This enables the manual "Run workflow" button
 
-jobs:
-  pipeline:
-    runs-on: ubuntu-latest
-
-    # Starts cloud versions of your local Docker containers
-    services:
-      mongodb:
-        image: mongo:latest
-        ports:
-          - 27017:27017
 jobs:
   pipeline:
     runs-on: ubuntu-latest
@@ -22,7 +12,6 @@ jobs:
         image: mongo:latest
         ports:
           - 27017:27017
-
       minio:
         image: minio/minio:latest
         ports:
@@ -30,12 +19,10 @@ jobs:
         env:
           MINIO_ROOT_USER: minioadmin
           MINIO_ROOT_PASSWORD: minioadmin
+        # Final fix for MinIO initialization
         options: >-
-          --health-cmd "curl -f http://localhost:9000/minio/health/live || exit 1"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        command: server /data
+          minio server /data --console-address :9001
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -50,21 +37,19 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Wait for the containers to fully initialize
       - name: Wait for services
-        run: sleep 20
+        run: sleep 30
 
-      # This runs your Snakemake orchestrator
       - name: Run pipeline with Snakemake
         run: |
-          snakemake -j1
+          snakemake --cores 1
 
-      # Save the outputs even if earlier steps fail
-      - name: Upload outputs
+      # BONUS: Visualization/Artifact Storage
+      - name: Upload Report and Plot
         if: always() 
         uses: actions/upload-artifact@v4
         with:
-          name: pipeline-outputs
+          name: dionis-report-outputs
           path: |
             bird_report.csv
             bird_report_plot.png
