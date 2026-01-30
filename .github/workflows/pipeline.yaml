@@ -7,6 +7,25 @@ jobs:
   pipeline:
     runs-on: ubuntu-latest
 
+    # This section starts the databases in the GitHub Cloud runner
+    services:
+      mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+      minio:
+        image: minio/minio:latest
+        ports:
+          - 9000:9000
+        env:
+          MINIO_ROOT_USER: minioadmin
+          MINIO_ROOT_PASSWORD: minioadmin
+        options: >-
+          --health-cmd "curl -f http://localhost:9000/minio/health/live || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -21,17 +40,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Run your workflow with Snakemake
+      # This runs your Snakemake orchestrator
       - name: Run pipeline with Snakemake
         run: |
           snakemake -j1
 
-      # Save pipeline outputs (optional, but very useful)
+      # Save the final CSV for the professor to see
       - name: Upload outputs
+        if: always() # Upload even if a step fails so you can see logs
         uses: actions/upload-artifact@v4
         with:
           name: pipeline-outputs
           path: |
             bird_report.csv
             bird_report_plot.png
-            
