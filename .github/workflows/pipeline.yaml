@@ -17,7 +17,7 @@ jobs:
         env:
           MINIO_ROOT_USER: minioadmin
           MINIO_ROOT_PASSWORD: minioadmin
-        command: server /data             
+          command: server /data             
       zookeeper:
         image: bitnami/zookeeper:latest
         ports:
