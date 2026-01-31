@@ -37,7 +37,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install snakemake pulp  # Ensures snakemake is available
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      # Add this step to start minio
+      # step to start minio
       - name: Start MinIO
         run: |
           docker run -d -p 9000:9000 \

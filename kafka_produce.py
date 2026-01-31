@@ -1,3 +1,4 @@
+import random
 from kafka import KafkaProducer
 import json
 
@@ -6,14 +7,21 @@ producer = KafkaProducer(
     value_serializer=lambda v: json.dumps(v).encode('utf-8')
 )
 
-# Sample message (customize these fields as you want)
+# A list of different biological observations to simulate different sources
+varied_observations = [
+    {"body_size": "medium", "migration_status": "resident", "flight_pattern": "undulating"},
+    {"body_temperature": "41C", "habitat": "wetlands", "plumage": "bright"},
+    {"diet": "insectivore", "nesting": "cavity", "clutch_size": 4},
+    {"wingspan": "30cm", "activity_period": "diurnal"}
+]
+
+# Randomly pick one to show your DB can handle "varying biological data"
 message = {
-    "taxonomy_id": 1001,
+    "taxonomy_id": 2473325,
     "location": {"latitude": -17.82, "longitude": 31.05},
-    "body_size": "medium",
-    "migration_status": "resident"
+    **random.choice(varied_observations) # This adds the varying fields
 }
 
 producer.send('bird_sightings', value=message)
 producer.flush()
-print("Test message sent!")
+print(f"Sent varied observation: {message}")
