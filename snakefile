@@ -32,4 +32,5 @@ rule generate_report:
     shell: "{params.py} report.py"
 
     #this is red because for some reason vscode isn't reading my code properly apparently
-    # vs code is reading my snakefile like a standard python file.
+    # vs code is reading my snakefile like a standard python file, fixed it it was actually being read
+    # as a yaml file so I just changed the language to snakemake :).
